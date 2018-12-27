@@ -58,19 +58,16 @@ public class SampleCarouselViewActivity extends AppCompatActivity {
         carouselView.setImageClickListener(new ImageClickListener() {
             @Override
             public void onClick(int position) {
-                Toast.makeText(SampleCarouselViewActivity.this, "Clicked item: "+ position, Toast.LENGTH_SHORT).show();
+                Toast.makeText(SampleCarouselViewActivity.this, "Clicked item: " + position, Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
     // To set simple images
     ImageListener imageListener = new ImageListener() {
         @Override
         public void setImageForPosition(int position, ImageView imageView) {
-
             Picasso.with(getApplicationContext()).load(sampleNetworkImageURLs[position]).placeholder(sampleImages[0]).error(sampleImages[3]).fit().centerCrop().into(imageView);
-
             //imageView.setImageResource(sampleImages[position]);
         }
     };
@@ -79,7 +76,6 @@ public class SampleCarouselViewActivity extends AppCompatActivity {
     ViewListener viewListener = new ViewListener() {
         @Override
         public View setViewForPosition(int position) {
-
             View customView = getLayoutInflater().inflate(R.layout.view_custom, null);
 
             TextView labelTextView = (TextView) customView.findViewById(R.id.labelTextView);
@@ -88,7 +84,7 @@ public class SampleCarouselViewActivity extends AppCompatActivity {
             fruitImageView.setImageResource(sampleImages[position]);
             labelTextView.setText(sampleTitles[position]);
 
-            carouselView.setIndicatorGravity(Gravity.CENTER_HORIZONTAL|Gravity.TOP);
+            carouselView.setIndicatorGravity(Gravity.CENTER_HORIZONTAL | Gravity.TOP);
 
             return customView;
         }

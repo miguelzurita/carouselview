@@ -18,6 +18,8 @@ import com.synnapps.carouselview.ViewListener;
 public class ListCarouselViewActivity extends AppCompatActivity {
 
     CarouselView customCarouselView;
+    CarouselView customCarouselView2;
+    CarouselView customCarouselView3;
 
     int[] sampleImages = {R.drawable.image_1, R.drawable.image_2, R.drawable.image_3, R.drawable.image_4, R.drawable.image_5};
     String[] sampleTitles = {"Orange", "Grapes", "Strawberry", "Cherry", "Apricot"};
@@ -37,25 +39,20 @@ public class ListCarouselViewActivity extends AppCompatActivity {
         customCarouselView = findViewById(R.id.customCarouselView);
 
         customCarouselView.setPageCount(sampleNetworkImageURLs.length);
-        customCarouselView.setSlideInterval(4000);
         customCarouselView.setViewListener(viewListener);
-//        customCarouselView.setImageListener(imageListener);
+        customCarouselView.stopCarousel();
+
+        customCarouselView2 = findViewById(R.id.customCarouselView2);
+        customCarouselView2.setPageCount(sampleNetworkImageURLs.length);
+        customCarouselView2.setViewListener(viewListener2);
+        customCarouselView2.stopCarousel();
+
+        customCarouselView3 = findViewById(R.id.customCarouselView3);
+        customCarouselView3.setPageCount(sampleNetworkImageURLs.length);
+        customCarouselView3.setViewListener(viewListener2);
+        customCarouselView3.stopCarousel();
 
     }
-
-    // To set simple images
-    ImageListener imageListener = new ImageListener() {
-        @Override
-        public void setImageForPosition(int position, ImageView imageView) {
-            Picasso.with(getApplicationContext())
-                    .load(sampleNetworkImageURLs[position])
-                    .placeholder(sampleImages[0])
-                    .error(sampleImages[3])
-                    .fit()
-                    .centerCrop()
-                    .into(imageView);
-        }
-    };
 
     // To set custom views
     ViewListener viewListener = new ViewListener() {
@@ -66,7 +63,28 @@ public class ListCarouselViewActivity extends AppCompatActivity {
             TextView labelTextView = customView.findViewById(R.id.labelTextView);
             ImageView fruitImageView = customView.findViewById(R.id.fruitImageView);
 
-//            fruitImageView.setImageResource(sampleNetworkImageURLs[position]);
+            Picasso.with(getApplicationContext())
+                    .load(sampleNetworkImageURLs[position])
+                    .placeholder(sampleImages[0])
+                    .error(sampleImages[3])
+                    .fit()
+                    .centerCrop()
+                    .into(fruitImageView);
+
+            labelTextView.setText(sampleTitles[position]);
+
+            return customView;
+        }
+    };
+
+    // To set custom views
+    ViewListener viewListener2 = new ViewListener() {
+        @Override
+        public View setViewForPosition(int position) {
+            View customView = getLayoutInflater().inflate(R.layout.view_custom, null);
+
+            TextView labelTextView = customView.findViewById(R.id.labelTextView);
+            ImageView fruitImageView = customView.findViewById(R.id.fruitImageView);
 
             Picasso.with(getApplicationContext())
                     .load(sampleNetworkImageURLs[position])

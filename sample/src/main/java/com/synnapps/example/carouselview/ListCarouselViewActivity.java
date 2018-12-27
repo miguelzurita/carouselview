@@ -15,6 +15,9 @@ import com.synnapps.carouselview.ImageClickListener;
 import com.synnapps.carouselview.ImageListener;
 import com.synnapps.carouselview.ViewListener;
 
+import hb.xvideoplayer.MxVideoPlayer;
+import hb.xvideoplayer.MxVideoPlayerWidget;
+
 public class ListCarouselViewActivity extends AppCompatActivity {
 
     CarouselView customCarouselView;
@@ -26,9 +29,15 @@ public class ListCarouselViewActivity extends AppCompatActivity {
     String[] sampleNetworkImageURLs = {
             "https://placeholdit.imgix.net/~text?txtsize=15&txt=image1&txt=350%C3%97150&w=350&h=150",
             "https://placeholdit.imgix.net/~text?txtsize=15&txt=image2&txt=350%C3%97150&w=350&h=150",
-            "https://placeholdit.imgix.net/~text?txtsize=15&txt=image3&txt=350%C3%97150&w=350&h=150",
-            "https://placeholdit.imgix.net/~text?txtsize=15&txt=image4&txt=350%C3%97150&w=350&h=150",
-            "https://placeholdit.imgix.net/~text?txtsize=15&txt=image5&txt=350%C3%97150&w=350&h=150"
+            "https://placeholdit.imgix.net/~text?txtsize=15&txt=image3&txt=350%C3%97150&w=350&h=150"
+//            "https://placeholdit.imgix.net/~text?txtsize=15&txt=image4&txt=350%C3%97150&w=350&h=150",
+//            "https://placeholdit.imgix.net/~text?txtsize=15&txt=image5&txt=350%C3%97150&w=350&h=150"
+    };
+
+    String[] sampleNetworkImageURLs2 = {
+            "http://techslides.com/demos/sample-videos/small.mp4",
+            "https://placeholdit.imgix.net/~text?txtsize=15&txt=image1&txt=350%C3%97150&w=350&h=150",
+            "http://techslides.com/demos/sample-videos/small.mp4"
     };
 
     @Override
@@ -44,12 +53,12 @@ public class ListCarouselViewActivity extends AppCompatActivity {
 
         customCarouselView2 = findViewById(R.id.customCarouselView2);
         customCarouselView2.setPageCount(sampleNetworkImageURLs.length);
-        customCarouselView2.setViewListener(viewListener2);
+        customCarouselView2.setViewListener(viewListener);
         customCarouselView2.stopCarousel();
 
         customCarouselView3 = findViewById(R.id.customCarouselView3);
         customCarouselView3.setPageCount(sampleNetworkImageURLs.length);
-        customCarouselView3.setViewListener(viewListener2);
+        customCarouselView3.setViewListener(viewListener);
         customCarouselView3.stopCarousel();
 
     }
@@ -62,14 +71,24 @@ public class ListCarouselViewActivity extends AppCompatActivity {
 
             TextView labelTextView = customView.findViewById(R.id.labelTextView);
             ImageView fruitImageView = customView.findViewById(R.id.fruitImageView);
+            MxVideoPlayer listVideoPlayer = (MxVideoPlayerWidget) customView.findViewById(R.id.list_video_player);
 
-            Picasso.with(getApplicationContext())
-                    .load(sampleNetworkImageURLs[position])
-                    .placeholder(sampleImages[0])
-                    .error(sampleImages[3])
-                    .fit()
-                    .centerCrop()
-                    .into(fruitImageView);
+            listVideoPlayer.setVisibility(View.GONE);
+            fruitImageView.setVisibility(View.GONE);
+
+            if (position == 1) {
+                Picasso.with(getApplicationContext())
+                        .load(sampleNetworkImageURLs[position])
+                        .placeholder(sampleImages[0])
+                        .error(sampleImages[3])
+                        .fit()
+                        .centerCrop()
+                        .into(fruitImageView);
+                fruitImageView.setVisibility(View.VISIBLE);
+            } else {
+                listVideoPlayer.startPlay(sampleNetworkImageURLs2[position], MxVideoPlayer.SCREEN_LAYOUT_LIST, "");
+                listVideoPlayer.setVisibility(View.VISIBLE);
+            }
 
             labelTextView.setText(sampleTitles[position]);
 
@@ -78,13 +97,16 @@ public class ListCarouselViewActivity extends AppCompatActivity {
     };
 
     // To set custom views
-    ViewListener viewListener2 = new ViewListener() {
+    /*ViewListener viewListener2 = new ViewListener() {
         @Override
         public View setViewForPosition(int position) {
             View customView = getLayoutInflater().inflate(R.layout.view_custom, null);
 
             TextView labelTextView = customView.findViewById(R.id.labelTextView);
             ImageView fruitImageView = customView.findViewById(R.id.fruitImageView);
+
+            MxVideoPlayer listVideoPlayer = (MxVideoPlayerWidget) customView.findViewById(R.id.list_video_player);
+            listVideoPlayer.startPlay(sampleNetworkImageURLs2[position], MxVideoPlayer.SCREEN_LAYOUT_LIST, "");
 
             Picasso.with(getApplicationContext())
                     .load(sampleNetworkImageURLs[position])
@@ -98,5 +120,5 @@ public class ListCarouselViewActivity extends AppCompatActivity {
 
             return customView;
         }
-    };
+    };*/
 }

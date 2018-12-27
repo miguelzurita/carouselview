@@ -10,6 +10,11 @@
         android:layout_height="fill_parent"
         android:scaleType="centerCrop" />
 
+    <hb.xvideoplayer.MxVideoPlayerWidget
+        android:id="@+id/list_video_player"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
+
     <TextView
         android:id="@+id/labelTextView"
         style="@style/TextView.Label"
